@@ -1,9 +1,42 @@
-import Image from "next/image";
+// "use client";
+import { Poppins } from "next/font/google";
+import { cn } from "@/lib/utils";
 
-export default function Home() {
+import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
+import { LoginButton } from "@/components/auth/login-button";
+import { LoginButtonTest } from "@/components/auth/login-button-form-hook";
+
+const font = Poppins({
+  subsets: ["latin"],
+  weight: ["600"],
+});
+
+export default async function Home() {
+  console.log("hello world");
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-24">
-      Hello Auth!
-    </div>
+    <main className="flex h-full flex-col items-center justify-center bg-[#ffffff]">
+      <div className="space-y-6 text-center">
+        <h1
+          className={cn(
+            "text-5xl font-semibold text-white drop-shadow-custom-text",
+            font.className
+          )}
+        >
+          Auth
+        </h1>
+        <div>
+          <LoginButton>
+            <Button variant="custom">Sign in</Button>
+          </LoginButton>
+        </div>
+        {/* <div>
+          <LoginButtonTest>
+            <Button variant="custom">Sign in test</Button>
+          </LoginButtonTest>
+        </div> */}
+      </div>
+    </main>
   );
 }
