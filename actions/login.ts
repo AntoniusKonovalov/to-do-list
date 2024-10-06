@@ -8,9 +8,9 @@ const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
 export const login = async(values: z.infer<typeof LoginSchema>) => {
      await delay(1000) 
      
-     const validateFields = LoginSchema.safeParse(values);
+     const validatedFields = LoginSchema.safeParse(values);
 
-     if(!validateFields.success) {
+     if(!validatedFields.success) {
           return {error: "Invalid fields!"};
      }
 
