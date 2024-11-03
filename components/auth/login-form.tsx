@@ -23,8 +23,8 @@ import { login } from "@/actions/login";
 
 export const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | undefined>('');
-  const [success, setSuccess] = useState<string | undefined>('');
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -35,16 +35,24 @@ export const LoginForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    setError("")
-    setSuccess("")
+    setError("");
+    setSuccess("");
 
     startTransition(() => {
       login(values)
-      .then((data) => {
-        setError(data.error)
-        setSuccess(data.success)
-
-      })
+        .then((data) => {
+          if (data) {
+            setError(data.error);
+            setSuccess(data.success);
+          } else {
+            // Handle a successful login where nothing is returned explicitly
+            setSuccess("Login successful!");
+          }
+        })
+        .catch((error) => {
+          setError("An unexpected error occurred.");
+          console.error(error);
+        });
     });
   };
 

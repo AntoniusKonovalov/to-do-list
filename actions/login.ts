@@ -6,10 +6,9 @@ import { signIn } from "@/auth";
 import { LoginSchema } from "@/schemas";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+// const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
-  await delay(1000);
 
   const validatedFields = LoginSchema.safeParse(values);
 
@@ -37,4 +36,6 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 
     throw error;
   }
+
+     return { success: "Logged in!" };
 };

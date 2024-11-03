@@ -1,3 +1,5 @@
+// The reason for auth.config.ts is to separate it with auth.ts as Prisma is not working on the Edge
+
 import bcrypt from "bcryptjs";
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
