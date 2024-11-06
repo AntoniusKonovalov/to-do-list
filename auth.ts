@@ -8,7 +8,7 @@ import { string } from "zod";
 
 export const {
   auth,
-  handlers: { GET, POST }, 
+  handlers: { GET, POST },
   signIn,
   signOut,
 } = NextAuth({
@@ -25,6 +25,25 @@ export const {
     },
   },
   callbacks: {
+    async signIn({ user, account }) {
+      // Allow OAuth providers to sign in without email verification
+      if (account?.provider !== "credentials") return true;
+
+      if(!user.id) {
+        return false;
+      }
+
+      const existingUser = await getUserById(user.id);
+
+      // Prevent sign in if email is not verified
+      if (!existingUser?.emailVerified) {
+        return false;
+      }
+
+      //TODO: Add 2FA check here
+      return true;
+    },
+
     async session({ token, session }) {
       console.log({ sessionToken: token });
       if (token.sub && session.user) {
