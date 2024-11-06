@@ -8,12 +8,12 @@ import { string } from "zod";
 
 export const {
   auth,
-  handlers: { GET, POST },
+  handlers: { GET, POST }, 
   signIn,
   signOut,
 } = NextAuth({
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/auth/login",
     error: "/auth/error",
   },
   events: {
