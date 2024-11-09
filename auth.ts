@@ -29,7 +29,7 @@ export const {
       // Allow OAuth providers to sign in without email verification
       if (account?.provider !== "credentials") return true;
 
-      if(!user.id) {
+      if (!user.id) {
         return false;
       }
 
