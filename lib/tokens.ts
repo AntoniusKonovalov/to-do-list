@@ -25,5 +25,6 @@ export const generateVerificationToken = async (email: string) => {
         },
     });
 
+    console.log("Verification token created:", verificationToken);
     return verificationToken;
 };
