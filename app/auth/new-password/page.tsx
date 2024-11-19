@@ -7,3 +7,5 @@ const NewPasswordPage = () => {
     </div>
   );
 }
+
+export default NewPasswordPage;
