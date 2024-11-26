@@ -11,15 +11,6 @@ const font = Poppins({
 });
 
 export default function Home() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const token = true;
-
-    if(token) {
-      setIsAuthenticated(true);
-    }
-  }, [])
 
   return <AuthMain />;
 }

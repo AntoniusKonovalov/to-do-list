@@ -5,7 +5,6 @@ import { getUserById } from "@/data/user";
 import authConfig from "@/auth.config";
 import { db } from "@/lib/db";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
-import { error } from "console";
 
 export const {
   auth,
@@ -44,9 +43,10 @@ export const {
 
       if (existingUser.isTwoFactorEnabled) {
         const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
-          existingUser.id);
+          existingUser.id
+        );
 
-          console.log({ twoFactorConfirmation });
+        console.log({ twoFactorConfirmation });
 
         if (!twoFactorConfirmation) return false;
 
@@ -54,7 +54,7 @@ export const {
         await db.twoFactorConfirmation.delete({
           where: {
             id: twoFactorConfirmation.id,
-          },  
+          },
         });
       }
 
@@ -62,7 +62,6 @@ export const {
     },
 
     async session({ token, session }) {
-      console.log({ sessionToken: token });
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }
