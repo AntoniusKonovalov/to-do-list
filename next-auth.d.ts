@@ -4,6 +4,7 @@ import { JWT } from "next-auth/jwt";
 
 export type ExtendedUser = DefaultSession["user"] & {
   role?: UserRole;
+  isTwoFactorEnabled?: boolean;
 };
 
 declare module "next-auth" {
@@ -12,6 +13,7 @@ declare module "next-auth" {
       id?: string;
       role?: "USER" | "ADMIN"; // Add role to session user
       image?: string;
+      isTwoFactorEnabled?: boolean;
     };
   }
 
