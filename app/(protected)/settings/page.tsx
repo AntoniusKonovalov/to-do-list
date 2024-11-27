@@ -3,46 +3,58 @@
 import { logout } from "@/actions/logout";
 import { useCurrentUser } from "@/app/hooks/use-current-user";
 import { getSession, useSession, signOut } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 
-interface User {
-  id?: string;
-  role?: "USER" | "ADMIN";
-  image?: string;
-}
-
-
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { settings } from "@/actions/settings";
 
 const SettingsPage = () => {
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchSession = async () => {
-      setLoading(true); 
-      console.log("fetching session");
-      await getSession();
-      setLoading(false); 
-    };
+  // useEffect(() => {
+  //   const fetchSession = async () => {
+  //     setLoading(true);
+  //     console.log("fetching session");
+  //     await getSession();
+  //     setLoading(false);
+  //   };
 
-    fetchSession();
-  }, []);
+  //   fetchSession();
+  // }, []);
+
+  // const onClick = () => {
+  //   logout();
+  // };
+
+  // if (loading) {
+  //   // Display loading state
+  //   return <div>Loading...</div>;
+  // }
+  const { update } = useSession();
+  const [isPending, startTransition] = useTransition();
 
   const onClick = () => {
-    logout();
+    startTransition(() => {
+      settings({
+        name: "Something different",
+      }).then(() => {
+        update();
+      });
+    });
   };
 
-  if (loading) {
-    // Display loading state
-    return <div>Loading...</div>;
-  }
-
-
   return (
-    <div className="bg-white p-10 rounded-xl">
-      <button onClick={onClick} type="submit">
-        Sign out
-      </button>
-    </div>
+    <Card className="w-[90%]">
+      <CardHeader>
+        <p className="text-2xl font-semibold text-center">Settings</p>
+      </CardHeader>
+      <CardContent>
+        <Button disabled={isPending} onClick={onClick}>
+          Update Name
+        </Button>
+      </CardContent>
+    </Card>
   );
 };
 
